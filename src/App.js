@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from "react";
+
+import NavBar from "./Component/NavBar";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import WorkExperience from "./Component/WorkExperience";
+import Hobbies from "./Component/Hobbies";
+import Education from "./Component/Education";
+import About from "./Component/About";
+import Home from "./Component/Home";
+
+
+const PageNotFound = () =>{
+  return <div style={{marginTop:"200px", textAlign:"center"}}>  Page Not Found </div>
+}
+
 
 function App() {
+
+const [state, setState]= useState('#29CCCC')
+
+  const handlcolor = (e) => (
+    setState(e.target.value)
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+      <NavBar  value={state} onChange={handlcolor}/>
+        <Switch> 
+        <Route exact path="/" component={Home} value={state} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/education" component={Education} />
+        <Route exact path="/hobbies" component={Hobbies} />
+        <Route exact path="/work-experience" component={WorkExperience} />
+        <Route path="/*" component={PageNotFound} />
+        </Switch>
+      </Router>
     </div>
   );
 }
